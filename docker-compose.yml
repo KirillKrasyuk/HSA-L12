@@ -1,0 +1,44 @@
+version: '3.6'
+
+services:
+  nginx-1:
+    image: anroe/nginx-geoip2:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./GeoLite2-Country.mmdb:/etc/nginx/GeoLite2-Country.mmdb
+    ports:
+      - "9900:9000"
+
+  gb-1:
+    build: api/
+    ports:
+      - "9901:9000"
+    env_file: .env
+
+  us-1:
+    build: api/
+    ports:
+      - "9902:9000"
+    env_file: .env
+
+  us-2:
+    build: api/
+    ports:
+      - "9903:9000"
+    env_file: .env
+
+  all-1:
+    build: api/
+    ports:
+      - "9904:9000"
+    env_file: .env
+
+  backup-1:
+    build: api/
+    ports:
+      - "9905:9000"
+    env_file: .env
+
+networks:
+  application:
+    driver: bridge
